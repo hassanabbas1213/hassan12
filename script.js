@@ -160,5 +160,19 @@ retryImgs.forEach(img => {
         setTimeout(() => {
             img.src = originalSrc + '?retry=' + Date.now();
         }, 800);
-    });
+
+    /* ---------- Auto-close mobile menu on scroll ---------- */
+    if (navLinks && mobileMenuBtn) {
+        let lastScrollY = window.scrollY;
+        window.addEventListener('scroll', () => {
+            if (!navLinks.classList.contains('active')) return;
+            const currentY = window.scrollY;
+            // Close if user scrolls more than 10px in either direction
+            if (Math.abs(currentY - lastScrollY) > 10) {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                lastScrollY = currentY;
+            }
+        }, { passive: true });
+    }    });
 });
